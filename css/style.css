@@ -14,6 +14,8 @@ body{
 /* Header */
 header{
     height: 10vh;
+    position: relative;
+    z-index: 1;
 }
 
 /* Slidebar */
@@ -23,8 +25,11 @@ header{
     width: 230px;
     background-color: #7b7b7b;
     color: white;
-    min-height: 88vh;
-    position: relative;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
 }
 
 .slidebar a {
@@ -44,21 +49,21 @@ header{
 }
 
 .slidebar .infoImg{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border: 1px solid #fff;
     border-radius: 50%;
     position: absolute;
-    top: 70vh;
+    top: 90vh;
     left: 10px;
     background-color: #fff;
 }
 
 .slidebar #accountName p{
     position: absolute;
-    top: 71.5vh;
+    top: 91.5vh;
     left: 70px;
-    font-size: 19px;
+    font-size: 14px;
     font-style: italic;
 }
 
