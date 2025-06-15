@@ -11,15 +11,15 @@ class PhoneStore {
         this.list_staff = list_staff;
     }
 
-    getProductById(id){
+    getProductById(id) {
         return this.list_product.find(product => product.id_product === id);
     }
 
-    getStaffById(id){
+    getStaffById(id) {
         return this.list_staff.find(staff => staff.id_staff === id);
     }
 
-    getStaffByName(name){
+    getStaffByName(name) {
         return this.list_staff.find(staff => staff.name_staff === name);
     }
     getListProduct() {
@@ -32,30 +32,40 @@ class PhoneStore {
     // savetoLocalStorage
     saveToLocalStorage() {
         localStorage.setItem('list_product', JSON.stringify(this.list_product));
-        localStorage.setItem('list_staff', JSON.stringify(this.list_staff));
     }
 
     // loadFromLocalStorage() 
-    loadFromLocalStorage(){
+    loadFromLocalStorage() {
         let productList = localStorage.getItem('list_product');
-        let staffList = localStorage.getItem('list_staff');
 
-        if(productList) {
+        if (productList) {
             let parsedProductList = JSON.parse(productList);
             this.list_product = parsedProductList.map(p => new Product(p.id_product, p.name_product, p.price_product, p.quantity_product, p.image_product, p.description_product));
         }
-
-        if(staffList) {
-            let parsedStaffList = JSON.parse(staffList);
-            this.list_staff = parsedStaffList.map(s => new Staff(s.id_staff, s.name_staff, s.position_staff));
+        else {
+            this.list_product = [];
         }
     }
 
+    saveStaffToLocalStorage() {
+        localStorage.setItem('list_staff', JSON.stringify(this.list_staff));
+    }
+
+    loadStaffFromLocalStorage() {
+        let staffList = localStorage.getItem('list_staff');
+        if (staffList) {
+            let parsedStaffList = JSON.parse(staffList);
+            this.list_staff = parsedStaffList.map(s => new Staff(s.id_staff, s.name_staff, s.age_staff, s.gender_staff, s.phone_staff, s.email_staff, s.address_staff));
+        }
+        else {
+            this.list_staff = [];
+        }
+    }
 
     // QL sản phẩm
-    addProduct(newProduct){
+    addProduct(newProduct) {
         let product = this.getProductById(newProduct.id_product);
-        if(product === undefined){
+        if (product === undefined) {
             this.list_product.push(newProduct);
         }
         else {
@@ -66,7 +76,7 @@ class PhoneStore {
     removeProduct(id) {
         id = String(id);
         let index = this.list_product.findIndex(product => product.id_product === id);
-        if(index === -1) {
+        if (index === -1) {
             alert('Không có sản phẩm này!');
         }
         else {
@@ -74,11 +84,10 @@ class PhoneStore {
         }
     }
 
-    updateProduct(id, newProduct){
+    updateProduct(id, newProduct) {
         id = String(id);
-        // Kiểm tra xem sản phẩm có tồn tại không
         let index = this.list_product.findIndex(product => product.id_product === id);
-        if(index === -1){
+        if (index === -1) {
             alert('Không có sản phẩm này');
         }
         else {
@@ -86,11 +95,11 @@ class PhoneStore {
         }
     }
 
-    getListProductByName(name){
+    getListProductByName(name) {
         let result = [];
-        for(let i = 0; i < this.list_product.length; i++){
+        for (let i = 0; i < this.list_product.length; i++) {
             let product = this.list_product[i];
-            if(product.name_product.toLowerCase().includes(name.toLowerCase())){
+            if (product.name_product.toLowerCase().includes(name.toLowerCase())) {
                 result.push(product);
             }
         }
@@ -99,5 +108,47 @@ class PhoneStore {
 
 
     // QL nhân viên
+    addStaff(newStaff) {
+        let staff = this.getProductById(newStaff.id_staff);
+        if (staff === undefined) {
+            this.list_staff.push(newStaff);
+        }
+        else {
+            alert('Nhân viên đã tồn tại');
+        }
+    }
 
+    removeStaff(id) {
+        id = String(id);
+        let index = this.list_staff.findIndex(staff => staff.id_staff === id);
+        if (index === -1) {
+            alert('Không có nhân viên này!');
+        }
+        else {
+            this.list_staff.splice(index, 1);
+        }
+    }
+
+    updateStaff(id, newStaff) {
+        id = String(id);
+        // Kiểm tra xem sản phẩm có tồn tại không
+        let index = this.list_staff.findIndex(staff => staff.id_staff === id);
+        if (index === -1) {
+            alert('Không có nhân viên này');
+        }
+        else {
+            this.list_staff[index] = newStaff;
+        }
+    }
+
+    getListStaffByName(name) {
+        let result = [];
+        for (let i = 0; i < this.list_staff.length; i++) {
+            let staff = this.list_staff[i];
+            if (staff.name_staff.toLowerCase().includes(name.toLowerCase())) {
+                result.push(staff);
+            }
+        }
+        return result;
+    }
 }
