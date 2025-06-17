@@ -18,6 +18,9 @@ class PhoneStore {
     getStaffById(id) {
         return this.list_staff.find(staff => staff.id_staff === id);
     }
+    getBranchById(id) {
+        return this.list_branch.find(branch => branch.id_branch === id);
+    }
 
     getStaffByName(name) {
         return this.list_staff.find(staff => staff.name_staff === name);
@@ -62,6 +65,11 @@ class PhoneStore {
         }
     }
 
+
+
+    
+
+
     // QL sản phẩm
     addProduct(newProduct) {
         let product = this.getProductById(newProduct.id_product);
@@ -105,6 +113,7 @@ class PhoneStore {
         }
         return result;
     }
+
 
 
     // QL nhân viên

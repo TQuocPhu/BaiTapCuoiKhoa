@@ -20,6 +20,7 @@
                     <h4 class="text-center py-3">Danh mục</h4>
                     <a href="./quanlysanpham.html">Sản phẩm</a>
                     <a href="./quanlynhanvien.html">Nhân viên</a>
+                    <a href="./quanlythuonghieu.html">Thương hiệu</a>
 
                     <img src="./images/avatar.jpg" class="infoImg" alt="Avatar">
 
@@ -56,6 +57,7 @@
                                 <th>Tên sản phẩm</th>
                                 <th>Giá</th>
                                 <th>Số lượng</th>
+                                <th>Thương hiệu</th>
                                 <th>Hình ảnh</th>
                                 <th>Mô tả ngắn</th>
                                 <th>Chức năng</th>
@@ -108,6 +110,13 @@
                                                 <img id="previewImage" src="" alt="Preview" width="120"
                                                     style="margin-top:10px;" />
                                             </div>
+                                            <!-- Thương hiệu -->
+                                            <div class="mb-3">
+                                                <label for="branchSelect" class="form-label">Thương hiệu</label>
+                                                <select class="form-select" id="branchSelect">
+                                                    <!-- Add options in JS -->
+                                                </select>
+                                            </div>
                                             <div class="mb-3">
                                                 <label for="productDescription" class="form-label">Mô tả sản
                                                     phẩm</label>
@@ -137,6 +146,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Import file class, main.js -->
+    <script src="./js/Branch.js"></script>
     <script src="./js/Product.js"></script>
     <!-- <script src="./js/Staff.js"></script> -->
     <script src="./js/PhoneStore.js"></script>

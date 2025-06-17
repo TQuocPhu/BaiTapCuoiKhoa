@@ -14,6 +14,15 @@ function renderProductList() {
     let html = ``;
     for (let i = 0; i < productList.length; i++) {
         let product = productList[i];
+
+        let branchNames = "Chưa có";
+
+        let branches = product.getListBranch();
+        if (branches && Array.isArray(branches) && branches.length > 0) {
+            branchNames = branches.map(function (branch) {
+                return branch.name_branch;
+            }).join(", ");
+        }
         // console.log(product);
         html +=
             `
@@ -22,6 +31,7 @@ function renderProductList() {
             <td>${product.name_product}</td>
             <td>${product.price_product} VND </td>
             <td>${product.quantity_product}</td>
+            <td>${branchNames}</td>
             <td><img src="${product.image_product}" alt="${product.name_product}" class="img-fluid" style="max-width: 150px"></td>
             <td style="max-width: 300px;">${product.description_product}</td>
             <td>
@@ -75,6 +85,11 @@ document.getElementById("productImage").addEventListener("change", function () {
     }
 });
 
+document.getElementById("addProductBtn").addEventListener("click", function () {
+    renderBranchOptions(); // load danh sách thương hiệu
+});
+
+
 document.getElementById("productForm").addEventListener("submit", addProduct);
 
 function addProduct(event) {
@@ -91,8 +106,11 @@ function addProduct(event) {
         return;
     }
 
-    let newProduct = new Product(id, name, price, quantity, imageDataURL, description);
-    if(isEditing) {
+    // let newProduct = new Product(id, name, price, quantity, imageDataURL, description);
+    let selectedBranchId = document.getElementById("branchSelect").value;
+    let selectedBranch = store.list_branch.find(branch => branch.id_branch === selectedBranchId);
+    let newProduct = new Product(id, name, price, quantity, imageDataURL, description, selectedBranch ? [selectedBranch] : []);
+    if (isEditing) {
         // Cập nhật sản phẩm
         store.updateProduct(editingProductId, newProduct);
         store.saveToLocalStorage();
@@ -100,7 +118,7 @@ function addProduct(event) {
         isEditing = false; // Reset trạng thái sửa
         editingProductId = null; // Reset ID sản phẩm đang sửa
     }
-    else{
+    else {
         store.addProduct(newProduct);
         store.saveToLocalStorage();
         renderProductList();
@@ -127,11 +145,19 @@ function removeProduct(id) {
 
 function showUpdateForm(id) {
     const product = store.getListProduct().find(p => p.id_product === id);
+    if (product.getListBranch().length > 0) {
+        document.getElementById("branchSelect").value = product.getListBranch()[0].id_branch;
+    }
     if (!product) {
         alert("Sản phẩm không tồn tại!");
         return;
     }
 
+    renderBranchOptions(); // Thêm ở đây để có danh sách trước khi set value
+
+    if (product.getListBranch().length > 0) {
+        document.getElementById("branchSelect").value = product.getListBranch()[0].id_branch;
+    }
     // Đổ dữ liệu vào form
     document.getElementById("productId").value = product.id_product;
     document.getElementById("productName").value = product.name_product;
@@ -152,13 +178,34 @@ function showUpdateForm(id) {
     modal.show();
 }
 
+function renderBranchOptions() {
+    const branchSelect = document.getElementById("branchSelect");
+    if (!branchSelect) return;
+
+    branchSelect.innerHTML = "<option value=''>-- Chọn thương hiệu --</option>";
+
+    // Tạo instance Product tạm để lấy danh sách thương hiệu
+    const tempProduct = new Product();
+    tempProduct.loadBranchFromLocalStorage();
+
+    const branchList = tempProduct.getListBranch();
+
+    branchList.forEach(branch => {
+        const option = document.createElement("option");
+        option.value = branch.id_branch;
+        option.textContent = branch.name_branch;
+        branchSelect.appendChild(option);
+    });
+}
+
+
 // Search sản phẩm
 function searchProduct() {
     let searchInput = document.getElementById("searchInput").value.trim();
     if (searchInput === "") {
         filteredList = null; // Hiển thị lại toàn bộ danh sách nếu không có từ khóa tìm kiếm
     } else {
-        filteredList = store.getListProduct().filter(product => 
+        filteredList = store.getListProduct().filter(product =>
             product.name_product.toLowerCase().includes(searchInput.toLowerCase()) ||
             product.id_product.toLowerCase().includes(searchInput.toLowerCase())
         );

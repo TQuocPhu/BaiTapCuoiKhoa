@@ -176,5 +176,4 @@ function searchStaff() {
     renderStaffList();
 }
 
-
 renderStaffList();
