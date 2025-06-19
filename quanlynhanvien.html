@@ -21,11 +21,18 @@
                     <a href="./quanlysanpham.html">Sản phẩm</a>
                     <a href="./quanlynhanvien.html">Nhân viên</a>
                     <a href="./quanlythuonghieu.html">Thương hiệu</a>
-                    
+
                     <img src="./images/avatar.jpg" class="infoImg" alt="Avatar">
 
                     <div id="accountName">
                         <p>Admin</p>
+                    </div>
+                    <!-- Button log out -->
+                    <div style="position: absolute; bottom: 38px; right: 10px;">
+                        <button id="logoutButton" style="background-color: #7b7b7b; 
+                                                border: none;
+                                                color: white;
+                                                font-size: 14px; font-style: italic;">Đăng xuất</button>
                     </div>
                 </div>
             </div>
@@ -119,7 +126,8 @@
                                             <div class="mb-3">
                                                 <label for="staffAddress" class="form-label">Địa chỉ</label>
                                                 <textarea class="form-control" id="staffAddress"
-                                                    placeholder="Nhập địa chỉ" rows="3" maxlength="1000" required></textarea>
+                                                    placeholder="Nhập địa chỉ" rows="3" maxlength="1000"
+                                                    required></textarea>
                                             </div>
                                             <!-- button -->
                                             <button type="submit" class="btn btn-primary">Cập nhật</button>
@@ -145,6 +153,7 @@
 
     <!-- Import file class, main.js -->
     <!-- <script src="./js/Product.js"></script> -->
+    <script src="./js/registerandlogin.js"></script>
     <script src="./js/Staff.js"></script>
     <script src="./js/PhoneStore.js"></script>
     <script src="./js/mainnv.js"></script>

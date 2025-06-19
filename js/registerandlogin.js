@@ -72,3 +72,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+// Xử lý đăng xuất
+document.addEventListener("DOMContentLoaded", function () {
+    let logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+            localStorage.removeItem("userList");
+            window.location.href = "trangchu.html";
+        });
+    }
+})

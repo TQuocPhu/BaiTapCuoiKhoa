@@ -27,6 +27,13 @@
                     <div id="accountName">
                         <p>Admin</p>
                     </div>
+                    <!-- Button log out -->
+                    <div style="position: absolute; bottom: 38px; right: 10px;">
+                        <button id="logoutButton" style="background-color: #7b7b7b; 
+                                                border: none;
+                                                color: white;
+                                                font-size: 14px; font-style: italic;">Đăng xuất</button>
+                    </div>
                 </div>
             </div>
 
@@ -34,13 +41,20 @@
                 <div class="content">
                     <h2 class="text-center fw-bold">Quản lý sản phẩm</h2>
                     <div class="row mb-3">
-                        <div class="col-12">
+                        <div class="col-7">
                             <div class="input-group mb-3 mt-3">
                                 <input type="text" class="form-control" id="searchInput"
                                     placeholder="Tìm kiếm sản phẩm theo tên hoặc mã sản phẩm" oninput="searchProduct()">
                             </div>
                         </div>
-
+                        <div class="col-5 mt-3">
+                            <select id="branchFilter" class="form-select" onchange="filterProductByBranch()">
+                                <option value="">-- Lọc theo thương hiệu --</option>
+                                <!-- Option sẽ được thêm từ JS -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <div class="col-12">
                             <!-- Nút này nằm ngoài modal -->
                             <button id="addProductBtn" type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -146,6 +160,7 @@
         crossorigin="anonymous"></script>
 
     <!-- Import file class, main.js -->
+    <script src="./js/registerandlogin.js"></script>
     <script src="./js/Branch.js"></script>
     <script src="./js/Product.js"></script>
     <!-- <script src="./js/Staff.js"></script> -->

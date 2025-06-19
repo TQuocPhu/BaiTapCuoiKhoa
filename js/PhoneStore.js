@@ -43,7 +43,7 @@ class PhoneStore {
 
         if (productList) {
             let parsedProductList = JSON.parse(productList);
-            this.list_product = parsedProductList.map(p => new Product(p.id_product, p.name_product, p.price_product, p.quantity_product, p.image_product, p.description_product));
+            this.list_product = parsedProductList.map(p => new Product(p.id_product, p.name_product, p.price_product, p.quantity_product, p.image_product, p.description_product, p.list_branch));
         }
         else {
             this.list_product = [];

@@ -38,7 +38,7 @@ class Product {
     getDescriptionProduct() {
         return this.description_product;
     }
-    
+
 
     getInfo() {
         return `${this.id_product} - ${this.name_product} - ${this.price} - ${this.quantity}`;
@@ -47,10 +47,10 @@ class Product {
         return this.list_branch;
     }
 
-    getBranchById(id){
+    getBranchById(id) {
         return this.list_branch.find(branch => branch.id_branch === id);
     }
-// QL Branch
+    // QL Branch
 
     saveBranchToLocalStorage() {
         localStorage.setItem('list_branch', JSON.stringify(this.list_branch));
@@ -106,6 +106,16 @@ class Product {
         }
         return result;
     }
+
+    // Filter the branch
+    filterBranchByName(name) {
+        let result = this.list_branch.filter(branch =>
+            branch.name_branch.toLowerCase().includes(name.toLowerCase())
+        );
+        return result;
+    }
+
+
 }
 
 

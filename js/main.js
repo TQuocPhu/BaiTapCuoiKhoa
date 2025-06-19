@@ -6,6 +6,8 @@ let filteredList = null;
 let imageDataURL = "";
 let isEditing = false; // Biến để theo dõi trạng thái sửa
 let editingProductId = null; // Biến để lưu ID sản phẩm đang sửa
+let product = new Product("", "", 0, 0, "", "", []);
+product.loadBranchFromLocalStorage();
 
 store.loadFromLocalStorage();
 function renderProductList() {
@@ -34,10 +36,9 @@ function renderProductList() {
             <td>${branchNames}</td>
             <td><img src="${product.image_product}" alt="${product.name_product}" class="img-fluid" style="max-width: 150px"></td>
             <td style="max-width: 300px;">${product.description_product}</td>
-            <td>
+            <td style="height: 30vh" class="d-flex justify-content-center align-items-center">
                 <button class="btn btn-danger" onclick="removeProduct('${product.id_product}')">Xóa</button>
                 <button class="btn btn-warning" onclick="showUpdateForm('${product.id_product}')">Sửa</button>
-
             </td>
         `
     }
@@ -90,6 +91,7 @@ document.getElementById("addProductBtn").addEventListener("click", function () {
 });
 
 
+
 document.getElementById("productForm").addEventListener("submit", addProduct);
 
 function addProduct(event) {
@@ -107,14 +109,22 @@ function addProduct(event) {
     }
 
     // let newProduct = new Product(id, name, price, quantity, imageDataURL, description);
+    // let selectedBranchId = document.getElementById("branchSelect").value;
+    // let selectedBranch = store.list_branch.find(branch => branch.id_branch === selectedBranchId);
     let selectedBranchId = document.getElementById("branchSelect").value;
-    let selectedBranch = store.list_branch.find(branch => branch.id_branch === selectedBranchId);
+    let selectedBranch = null;
+    let branchList = product.getListBranch();
+
+    if (branchList && selectedBranchId) {
+        selectedBranch = branchList.find(b => b.id_branch === selectedBranchId);
+    }
     let newProduct = new Product(id, name, price, quantity, imageDataURL, description, selectedBranch ? [selectedBranch] : []);
     if (isEditing) {
         // Cập nhật sản phẩm
         store.updateProduct(editingProductId, newProduct);
         store.saveToLocalStorage();
         renderProductList();
+        renderBranchFilterOptions();
         isEditing = false; // Reset trạng thái sửa
         editingProductId = null; // Reset ID sản phẩm đang sửa
     }
@@ -122,6 +132,7 @@ function addProduct(event) {
         store.addProduct(newProduct);
         store.saveToLocalStorage();
         renderProductList();
+        renderBranchFilterOptions();
     }
 
     document.getElementById("productForm").reset();
@@ -140,6 +151,7 @@ function removeProduct(id) {
         store.removeProduct(id);
         store.saveToLocalStorage();
         renderProductList();
+        renderBranchFilterOptions();
     }
 }
 
@@ -199,6 +211,33 @@ function renderBranchOptions() {
 }
 
 
+function renderBranchFilterOptions() {
+    let branchList = product.getListBranch();
+    let select = document.getElementById("branchFilter");
+    if (!select) return;
+
+    // Xóa các option cũ (giữ lại option đầu tiên)
+    select.innerHTML = `<option value="">-- Lọc theo thương hiệu --</option>`;
+    for (let branch of branchList) {
+        let option = document.createElement("option");
+        option.value = branch.id_branch;
+        option.textContent = branch.name_branch;
+        select.appendChild(option);
+    }
+}
+function filterProductByBranch() {
+    let selectedBranchId = document.getElementById("branchFilter").value;
+    if (selectedBranchId === "") {
+        filteredList = null; // hiển thị tất cả nếu không chọn gì
+    } else {
+        filteredList = store.getListProduct().filter(product =>
+            product.list_branch.some(branch => branch.id_branch === selectedBranchId)
+        );
+    }
+    renderProductList();
+}
+
+
 // Search sản phẩm
 function searchProduct() {
     let searchInput = document.getElementById("searchInput").value.trim();
@@ -211,6 +250,9 @@ function searchProduct() {
         );
     }
     renderProductList();
+    renderBranchFilterOptions();
 }
 
+
 renderProductList();
+renderBranchFilterOptions();

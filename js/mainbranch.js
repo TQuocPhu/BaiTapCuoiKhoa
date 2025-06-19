@@ -19,7 +19,7 @@ function renderBranchList() {
         <tr>
             <td>${branch.id_branch}</td>
             <td>${branch.name_branch}</td>
-            <td>
+            <td style="height: 8vh;" class="d-flex justify-content-center align-items-center">
                 <button class="btn btn-danger" onclick="removeBranch('${branch.id_branch}')">Xóa</button>
                 <button class="btn btn-warning" onclick="showUpdateBranchForm('${branch.id_branch}')">Sửa</button>
 
@@ -113,5 +113,7 @@ function searchBranch() {
     }
     renderBranchList();
 }
+
+
 
 renderBranchList();

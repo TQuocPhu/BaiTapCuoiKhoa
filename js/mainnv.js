@@ -25,7 +25,7 @@ function renderStaffList() {
             <td>${staff.phone_staff}</td>
             <td>${staff.email_staff}</td>
             <td style="max-width: 200px;">${staff.address_staff}</td>
-            <td>
+            <td class="d-flex justify-content-center align-items-center mx-auto">
                 <button class="btn btn-danger" onclick="removeStaff('${staff.id_staff}')">Xóa</button>
                 <button class="btn btn-warning" onclick="showUpdateForm('${staff.id_staff}')">Sửa</button>
 
