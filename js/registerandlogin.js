@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.href = "quanly.html";
             } else if (user) {
                 alert("Đăng nhập thành công!");
-                window.location.href = "index.html"; // Chuyển hướng đến trang chính
+                window.location.href = "trangchu_user.html"; // Chuyển hướng đến trang chính
             } else {
                 alert("Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại!");
             }
@@ -78,8 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let logoutButton = document.getElementById("logoutButton");
     if (logoutButton) {
         logoutButton.addEventListener("click", function () {
-            localStorage.removeItem("userList");
-            window.location.href = "trangchu.html";
+            let isConfirm = confirm('Ban chac chan muon dang xuat khong ?');
+            if(isConfirm){
+                // localStorage.removeItem("userList");
+                window.location.href = "trangchu.html";
+            }
         });
     }
 })
